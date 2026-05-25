@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { logout } from "../../services/authservice";
 import { apiUrl } from "../../services/api";
@@ -130,13 +131,13 @@ const Icon = ({ name, className = "h-5 w-5" }) => (
 );
 
 const NavLink = ({ href, icon, children }) => (
-  <a
-    href={href}
+  <Link
+    to={href}
     className="inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-bold text-gray-700 transition hover:bg-violet-50 hover:text-violet-700"
   >
     <Icon name={icon} className="h-4 w-4" />
     {children}
-  </a>
+  </Link>
 );
 
 const MenuItem = ({ href, icon, title, subtitle, onClick, danger = false }) => {
@@ -167,9 +168,9 @@ const MenuItem = ({ href, icon, title, subtitle, onClick, danger = false }) => {
   }`;
 
   return href ? (
-    <a href={href} className={className}>
+    <Link to={href} className={className}>
       {content}
-    </a>
+    </Link>
   ) : (
     <button type="button" onClick={onClick} className={className}>
       {content}
@@ -274,7 +275,7 @@ export function Header({
       <header className="sticky top-0 z-40 border-b border-violet-100/80 bg-white/90 text-gray-900 shadow-lg shadow-violet-100/50 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center justify-between gap-4">
-            <a href="/" className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
               <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-black shadow-lg shadow-violet-200 ring-2 ring-amber-300/70">
                 <img
                   src={saiSuryaLogo}
@@ -290,7 +291,7 @@ export function Header({
                   School Portal
                 </span>
               </span>
-            </a>
+            </Link>
 
             <button
               onClick={() => setMoreOpen((s) => !s)}
@@ -334,20 +335,20 @@ export function Header({
               </button>
             ) : (
               <>
-                <a
-                  href="/host"
+                <Link
+                  to="/host"
                   className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-400 px-4 py-3 text-sm font-black text-white shadow-lg shadow-violet-200 transition hover:brightness-105 active:scale-[0.98]"
                 >
                   <Icon name="login" className="h-4 w-4" />
                   Login
-                </a>
-                <a
-                  href="/teacher"
+                </Link>
+                <Link
+                  to="/teacher"
                   className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-400 px-4 py-3 text-sm font-black text-white shadow-lg shadow-violet-200 transition hover:brightness-105 active:scale-[0.98]"
                 >
                   <Icon name="login" className="h-4 w-4" />
                   Teacher Login
-                </a>
+                </Link>
               </>
             )}
           </div>

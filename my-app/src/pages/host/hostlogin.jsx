@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { login } from "../../../services/authservice";
+import { apiUrl } from "../../../services/api";
 
 const icons = {
   alert: (
@@ -100,7 +101,7 @@ export function Host({ setIsLoggedIn }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/auth", {
+      .get(apiUrl("/api/auth"), {
         withCredentials: true,
       })
       .then((res) => setIsLoggedIn(res.data?.isLoggedIn === true))
