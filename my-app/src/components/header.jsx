@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { logout } from "../../services/authservice";
+import { apiUrl } from "../../services/api";
 import saiSuryaLogo from "../assets/sai-surya-logo.jpeg";
 
 const icons = {
@@ -194,7 +195,7 @@ export function Header({
     }
 
     axios
-      .get("http://localhost:5000/api/auth", {
+      .get(apiUrl("/api/auth"), {
         withCredentials: true,
       })
       .then((res) => {
@@ -208,7 +209,7 @@ export function Header({
       });
 
     axios
-      .get("http://localhost:5000/api/auth/teacher", {
+      .get(apiUrl("/api/auth/teacher"), {
         withCredentials: true,
       })
       .then((res) => {
