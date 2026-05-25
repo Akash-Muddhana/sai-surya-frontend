@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { addNotice } from "../../../services/noticeservice";
+import { apiUrl } from "../../../services/api";
 
 const icons = {
   alert: (
@@ -100,10 +101,10 @@ export function Notice({ isLoggedIn, setIsLoggedIn }) {
   useEffect(() => {
     const validateSession = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth", {
+        const res = await axios.get(apiUrl("/api/auth"), {
           withCredentials: true,
         });
-        if (res.status === 200) {
+        if (res.data?.isLoggedIn === true) {
           setIsLoggedIn?.(true);
         } else {
           setIsLoggedIn?.(false);

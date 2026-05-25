@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { addTeacher } from "../../../services/teacherservice";
+import { apiUrl } from "../../../services/api";
 
 const icons = {
   alert: (
@@ -171,10 +172,10 @@ export function AddTeacher() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get("http://localhost:5000/api/auth", {
+        const res = await axios.get(apiUrl("/api/auth"), {
           withCredentials: true,
         });
-        setIsLoggedInLocal(true);
+        setIsLoggedInLocal(res.data?.isLoggedIn === true);
       } catch (err) {
         console.error("Auth check failed:", err);
         setIsLoggedInLocal(false);

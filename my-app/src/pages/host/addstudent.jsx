@@ -4,6 +4,7 @@ import {
   addStudent,
   addStudentMarks,
 } from "../../../services/studentservice";
+import { apiUrl } from "../../../services/api";
 
 const icons = {
   alert: (
@@ -253,10 +254,10 @@ export function AddStudent() {
     const checkAuth = async () => {
       try {
         const [hostAuth, teacherAuth] = await Promise.all([
-          axios.get("http://localhost:5000/api/auth", {
+          axios.get(apiUrl("/api/auth"), {
             withCredentials: true,
           }),
-          axios.get("http://localhost:5000/api/auth/teacher", {
+          axios.get(apiUrl("/api/auth/teacher"), {
             withCredentials: true,
           }),
         ]);

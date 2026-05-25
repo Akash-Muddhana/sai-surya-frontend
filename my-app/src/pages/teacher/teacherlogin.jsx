@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { teacherLogin } from "../../../services/authservice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../../../services/api";
 const icons = {
   alert: (
     <path
@@ -100,7 +101,7 @@ export function TeacherLogin({ isTeacherLoggedIn, setIsTeacherLoggedIn }) {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/auth/teacher", {
+      .get(apiUrl("/api/auth/teacher"), {
         withCredentials: true,
       })
       .then((res) =>
