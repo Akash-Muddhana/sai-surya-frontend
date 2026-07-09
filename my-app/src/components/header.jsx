@@ -194,11 +194,12 @@ export function Header({
     ) {
       return;
     }
-
+    const token = localStorage.getItem("token");
+    const authHeaders = token
+      ? { headers: { Authorization: `Bearer ${token}` } }
+      : {};
     axios
-      .get(apiUrl("/api/auth"), {
-        withCredentials: true,
-      })
+      .get(apiUrl("/api/auth"), authHeaders)
       .then((res) => {
         const authenticated = res.data?.isLoggedIn === true;
         setIsLoggedIn(authenticated);
@@ -210,9 +211,7 @@ export function Header({
       });
 
     axios
-      .get(apiUrl("/api/auth/teacher"), {
-        withCredentials: true,
-      })
+      .get(apiUrl("/api/auth/teacher"), authHeaders)
       .then((res) => {
         const authenticated = res.data?.isTeacherLoggedIn === true;
         setIsTeacherLoggedIn(authenticated);

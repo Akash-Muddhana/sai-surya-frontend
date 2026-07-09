@@ -27,7 +27,7 @@ function App() {
       />
 
       <Routes>
-        {/* Public Routes */}
+       
         <Route path="/" element={<Dashboard />} />
         <Route path="/host" element={<Host setIsLoggedIn={setIsLoggedIn} />} />
         <Route

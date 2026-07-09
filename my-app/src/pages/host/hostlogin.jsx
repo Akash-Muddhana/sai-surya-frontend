@@ -100,10 +100,12 @@ export function Host({ setIsLoggedIn }) {
   const canSubmit = email && password && isEmailValid && !submitted;
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const authHeaders = token
+      ? { headers: { Authorization: `Bearer ${token}` } }
+      : {};
     axios
-      .get(apiUrl("/api/auth"), {
-        withCredentials: true,
-      })
+      .get(apiUrl("/api/auth"), authHeaders)
       .then((res) => setIsLoggedIn(res.data?.isLoggedIn === true))
       .catch(() => setIsLoggedIn(false));
   }, [setIsLoggedIn]);

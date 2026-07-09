@@ -253,13 +253,13 @@ export function AddStudent() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        const token = localStorage.getItem("token");
+        const authHeaders = token
+          ? { headers: { Authorization: `Bearer ${token}` } }
+          : {};
         const [hostAuth, teacherAuth] = await Promise.all([
-          axios.get(apiUrl("/api/auth"), {
-            withCredentials: true,
-          }),
-          axios.get(apiUrl("/api/auth/teacher"), {
-            withCredentials: true,
-          }),
+          axios.get(apiUrl("/api/auth"), authHeaders),
+          axios.get(apiUrl("/api/auth/teacher"), authHeaders),
         ]);
         const isHost = hostAuth.data?.isLoggedIn === true;
         const isTeacher = teacherAuth.data?.isTeacherLoggedIn === true;

@@ -101,9 +101,11 @@ export function Notice({ isLoggedIn, setIsLoggedIn }) {
   useEffect(() => {
     const validateSession = async () => {
       try {
-        const res = await axios.get(apiUrl("/api/auth"), {
-          withCredentials: true,
-        });
+        const token = localStorage.getItem("token");
+        const authHeaders = token
+          ? { headers: { Authorization: `Bearer ${token}` } }
+          : {};
+        const res = await axios.get(apiUrl("/api/auth"), authHeaders);
         if (res.data?.isLoggedIn === true) {
           setIsLoggedIn?.(true);
         } else {

@@ -172,9 +172,11 @@ export function AddTeacher() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get(apiUrl("/api/auth"), {
-          withCredentials: true,
-        });
+        const token = localStorage.getItem("token");
+        const authHeaders = token
+          ? { headers: { Authorization: `Bearer ${token}` } }
+          : {};
+        const res = await axios.get(apiUrl("/api/auth"), authHeaders);
         setIsLoggedInLocal(res.data?.isLoggedIn === true);
       } catch (err) {
         console.error("Auth check failed:", err);

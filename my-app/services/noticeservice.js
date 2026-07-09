@@ -1,12 +1,18 @@
 import { apiUrl } from "./api";
-
+const getAuthHeader = () => {
+  const token = localStorage.getItem("token");
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
 export const addNotice = async (notice) => {
   const response = await fetch(apiUrl("/api/notice"), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
+
     body: JSON.stringify({ notice }),
   });
   const data = await response.json();
@@ -18,10 +24,7 @@ export const addNotice = async (notice) => {
 export const getNotice = async () => {
   const response = await fetch(apiUrl("/api/notice"), {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
+    headers: getAuthHeader(),
   });
   let data;
   try {

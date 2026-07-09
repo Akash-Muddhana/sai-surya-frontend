@@ -1,5 +1,10 @@
 import { apiUrl } from "./api";
-
+const getAuthHeader = () => {
+  const token = localStorage.getItem("token");
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
 export const addStudent = async ({
   name,
   rollNumber,
@@ -15,8 +20,8 @@ export const addStudent = async ({
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
     body: JSON.stringify({
       name,
       rollNumber,
@@ -40,8 +45,8 @@ export const getStudent = async ({ standard, roll }) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
     body: JSON.stringify({ standard, roll }),
   });
   const data = await response.json();
@@ -64,8 +69,8 @@ export const addStudentMarks = async ({
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
     body: JSON.stringify({
       studentId,
       standard,
@@ -95,8 +100,8 @@ export const getStudentMarks = async ({
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
     body: JSON.stringify({
       studentId,
       standard,
@@ -118,8 +123,8 @@ export const markStudentAttendance = async ({ standard, date, records }) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
     body: JSON.stringify({ standard, date, records }),
   });
   const data = await response.json();
@@ -134,8 +139,8 @@ export const getAttendanceDay = async ({ standard, date }) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
     body: JSON.stringify({ standard, date }),
   });
   const data = await response.json();
@@ -146,17 +151,14 @@ export const getAttendanceDay = async ({ standard, date }) => {
 };
 
 export const markAttendanceHoliday = async ({ standard, date, reason }) => {
-  const response = await fetch(
-    apiUrl("/api/students/attendance/holiday"),
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ standard, date, reason }),
+  const response = await fetch(apiUrl("/api/students/attendance/holiday"), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-  );
+    body: JSON.stringify({ standard, date, reason }),
+  });
   const data = await response.json();
   if (!response.ok) {
     throw data;
@@ -171,8 +173,8 @@ export const removeAttendanceHoliday = async ({ standard, date }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...getAuthHeader(),
       },
-      credentials: "include",
       body: JSON.stringify({ standard, date }),
     },
   );

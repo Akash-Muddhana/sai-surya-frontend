@@ -100,10 +100,12 @@ export function TeacherLogin({ isTeacherLoggedIn, setIsTeacherLoggedIn }) {
     email && password && isEmailValid && isPasswordValid && !submitted;
   const navigate = useNavigate();
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const authHeaders = token
+      ? { headers: { Authorization: `Bearer ${token}` } }
+      : {};
     axios
-      .get(apiUrl("/api/auth/teacher"), {
-        withCredentials: true,
-      })
+      .get(apiUrl("/api/auth/teacher"), authHeaders)
       .then((res) =>
         setIsTeacherLoggedIn(res.data?.isTeacherLoggedIn === true),
       )

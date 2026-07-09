@@ -1,13 +1,25 @@
 import { apiUrl } from "./api";
-
-export const addTeacher = async ({ name, age, subject, email, experience,password }) => {
+const getAuthHeader = () => {
+  const token = localStorage.getItem("token");
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
+export const addTeacher = async ({
+  name,
+  age,
+  subject,
+  email,
+  experience,
+  password,
+}) => {
   const response = await fetch(apiUrl("/api/teachers"), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
-    body: JSON.stringify({ name, age, email, subject, experience,password}),
+    body: JSON.stringify({ name, age, email, subject, experience, password }),
   });
   const data = await response.json();
   if (!response.ok) {
@@ -18,10 +30,7 @@ export const addTeacher = async ({ name, age, subject, email, experience,passwor
 export const getTeacher = async () => {
   const response = await fetch(apiUrl("/api/teachers"), {
     method: "GET",
-    headers: {
-      "Content-type": "application/json",
-    },
-    credentials: "include",
+    headers: getAuthHeader(),
   });
   const data = await response.json();
   if (!response.ok) {
@@ -34,8 +43,8 @@ export const updateTeacher = async (id, updatedData) => {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
+      ...getAuthHeader(),
     },
-    credentials: "include",
     body: JSON.stringify(updatedData),
   });
   const data = await response.json();
@@ -47,7 +56,9 @@ export const updateTeacher = async (id, updatedData) => {
 export const deleteTeacher = async (id) => {
   const response = await fetch(apiUrl(`/api/teachers/${id}`), {
     method: "DELETE",
-    credentials: "include",
+    headers: {
+      ...getAuthHeader(),
+    },
   });
   const data = await response.json();
   if (!response.ok) {
