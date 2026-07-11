@@ -368,7 +368,7 @@ export function Header({
         className={`fixed right-0 top-0 z-[90] h-full w-[min(88vw,360px)] transform overflow-y-auto bg-white text-gray-900 shadow-2xl transition-transform duration-300 ${
           moreOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        aria-hidden={!moreOpen}
+        inert={!moreOpen ? "" : undefined}
       >
         <div
           className={`p-6 text-white ${
