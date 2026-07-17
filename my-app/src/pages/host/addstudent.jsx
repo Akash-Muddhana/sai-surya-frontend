@@ -257,12 +257,16 @@ export function AddStudent() {
         const authHeaders = token
           ? { headers: { Authorization: `Bearer ${token}` } }
           : {};
-        const [hostAuth, teacherAuth] = await Promise.all([
+        const [hostAuth, teacherAuth] = await Promise.allSettled([
           axios.get(apiUrl("/api/auth"), authHeaders),
           axios.get(apiUrl("/api/auth/teacher"), authHeaders),
         ]);
-        const isHost = hostAuth.data?.isLoggedIn === true;
-        const isTeacher = teacherAuth.data?.isTeacherLoggedIn === true;
+        const isHost =
+          hostAuth.status === "fulfilled" &&
+          hostAuth.value.data?.isLoggedIn === true;
+        const isTeacher =
+          teacherAuth.status === "fulfilled" &&
+          teacherAuth.value.data?.isTeacherLoggedIn === true;
         setIsLoggedInLocal(isHost || isTeacher);
       } catch (err) {
         console.error("Auth check failed:", err);
