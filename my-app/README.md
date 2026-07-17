@@ -22,6 +22,24 @@ https://sai-surya-frontend.vercel.app/
 - Responsive Tailwind CSS interface with form validation, loading states, and protected route handling.
 - Deployed frontend configured for Vercel with SPA rewrites.
 
+## Architecture
+
+```text
+React Components
+        |
+        v
+React Router
+        |
+        v
+Service Layer
+        |
+        v
+Express REST API
+        |
+        v
+MongoDB
+```
+
 ## Features
 
 - Home page with school result highlights, notice display, school statistics, and image gallery.
@@ -83,7 +101,6 @@ https://sai-surya-frontend.vercel.app/
 - `eslint-plugin-react-hooks`
 - `eslint-plugin-react-refresh`
 - `globals`
-- `navigate`
 
 ## Project Structure
 
